@@ -1,0 +1,8 @@
+NAME="steps_test"
+COMMAND="python -c 'print \"\Hello world!"' "
+ENV_SETUP="
+module purge
+module load slurm
+mkdir mydir
+"
+
