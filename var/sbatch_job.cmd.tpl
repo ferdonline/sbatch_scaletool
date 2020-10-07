@@ -16,7 +16,7 @@
 #----EXIT IF ERROR--------------------
 set -e
 
-#----Set Environment---------------- 
+#----Set Environment----------------
 $ENV_SETUP
 
 #----ALLOC INFO-----------------------
@@ -30,6 +30,6 @@ echo
 #----RUN-------------------------------
 time srun $COMMAND
 
-#----END-------------------------------            
+#----END-------------------------------
 echo '===== End job execution ======'
 echo

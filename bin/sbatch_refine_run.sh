@@ -37,7 +37,7 @@ TPL_STR="$(<${PREFIX}/var/sbatch_job.cmd.tpl)"
 if [ -z "$OUTPUT_DIR" ]; then
     OUTPUT_DIR="srun_${NAME}_$(date +'%Y-%m-%d_%Hh%Mm')"
 fi
-mkdir -p $OUTPUT_DIR  
+mkdir -p $OUTPUT_DIR
 
 
 N_TSK=1
@@ -46,9 +46,9 @@ if [ -n $MIN_TASKS ]; then
 fi
 
 while [ $N_TSK -le $MAX_TASKS ]; do
-    echo " " 
+    echo " "
     echo "Preparing run with  N_processes = $N_TSK""..."
-    
+
     # --- max nodes per partition ---
     #  debug       1-512
     #  test        1-256
@@ -76,8 +76,8 @@ while [ $N_TSK -le $MAX_TASKS ]; do
         N_ND=512
         N_PER=$(($N_TSK/512))
     fi
-	
-    # use at most 64 tasks per node. Values only higher when N_TSK > 512*64 
+
+    # use at most 64 tasks per node. Values only higher when N_TSK > 512*64
     if [ $N_PER -gt 64 ]; then
         echo "Seriously? $N_TSK dont fit in 512 BG-q nodes "
         exit -1
@@ -89,14 +89,14 @@ while [ $N_TSK -le $MAX_TASKS ]; do
     echo " - Parameters of run: [Nodes=$N_ND, Tasks_per_node=$N_PER]"
 
     _CMD_FILE=$OUTPUT_DIR/"_srun_${NAME}_${N_TSK}.cmd"
-    
+
     #Fill template with necessary changes
     eval "echo \"$TPL_STR\"" > $_CMD_FILE
     if $START; then
         sbatch $SBATCH_OPTIONS $_CMD_FILE
     fi
-  
-    # Go as power of 2 
+
+    # Go as power of 2
     N_TSK=$((2*N_TSK))
 done
 
